@@ -72,7 +72,7 @@ public class RoomEntity {
         this.location = location;
     }
 
-    public Boolean getActive() {
+    public Boolean isActive() {
         return isActive;
     }
 

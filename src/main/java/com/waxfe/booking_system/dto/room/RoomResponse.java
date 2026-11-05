@@ -1,5 +1,7 @@
 package com.waxfe.booking_system.dto.room;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.time.LocalDateTime;
 
 public class RoomResponse {
@@ -14,6 +16,7 @@ public class RoomResponse {
 
     private final Boolean isActive;
 
+    @JsonFormat(pattern = "dd.MM.yyyy HH:mm")
     private final LocalDateTime createdAt;
 
     public RoomResponse(Long id, String name, Integer capacity, String location, Boolean isActive, LocalDateTime createdAt) {
