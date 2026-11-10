@@ -13,5 +13,10 @@ spring:
       hibernate:
         format-sql: true
 
+logging:
+  level:
+    org.springframework.transaction: DEBUG
+    org.springframework.orm.jpa: DEBUG
+
 server:
   port: 8080

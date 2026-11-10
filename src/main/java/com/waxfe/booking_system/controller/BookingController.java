@@ -41,8 +41,7 @@ public class BookingController {
     }
 
     @PostMapping
-    public ResponseEntity<BookingResponse> createBooking(@RequestBody @Valid BookingRequest request)
-    {
+    public ResponseEntity<BookingResponse> createBooking(@RequestBody @Valid BookingRequest request) {
         log.info("Called method createBooking");
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(service.createBooking(request));

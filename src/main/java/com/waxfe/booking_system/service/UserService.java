@@ -1,6 +1,7 @@
 package com.waxfe.booking_system.service;
 
 import com.waxfe.booking_system.UserRole;
+import com.waxfe.booking_system.config.SecurityConfig;
 import com.waxfe.booking_system.dto.user.UserRequest;
 import com.waxfe.booking_system.dto.user.UserResponse;
 import com.waxfe.booking_system.entity.UserEntity;
@@ -9,6 +10,7 @@ import com.waxfe.booking_system.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -19,10 +21,12 @@ public class UserService {
     private final static Logger log = LoggerFactory.getLogger(UserService.class);
     private final UserRepository repository;
     private final UserMapper mapper;
+    private final PasswordEncoder encoder;
 
-    public UserService(UserRepository repository, UserMapper mapper) {
+    public UserService(UserRepository repository, UserMapper mapper, PasswordEncoder encoder) {
         this.repository = repository;
         this.mapper = mapper;
+        this.encoder = encoder;
     }
 
     public List<UserResponse> getAllUsers()
@@ -41,6 +45,7 @@ public class UserService {
     public UserResponse createUser(UserRequest request)
     {
         UserEntity entity = mapper.toEntity((request));
+        entity.setPassword(encoder.encode(request.getPassword()));
         entity.setRole(UserRole.USER);
         entity.setCreatedAt(LocalDateTime.now());
         var saved = repository.save(entity);
