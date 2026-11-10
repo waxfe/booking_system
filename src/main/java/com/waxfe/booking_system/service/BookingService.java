@@ -14,6 +14,7 @@ import jakarta.persistence.EntityNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -54,6 +55,7 @@ public class BookingService {
         return allBookingRooms.stream().map(mapper::toDomain).toList();
     }
 
+    @Transactional()
     public BookingResponse createBooking(BookingRequest request) {
         RoomEntity room = roomRepository.findById(request.getRoomId()).orElseThrow(
                 () -> new EntityNotFoundException("No such room with id:" + request.getRoomId())
